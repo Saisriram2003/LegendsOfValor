@@ -94,7 +94,7 @@ public class Legends extends Game{
 
         //set 3rd hero to 7,6
         heroList.get(2).moveToCell(7,6,board);
-        heroList.get(2).setMyNexus(7, 3);
+        heroList.get(2).setMyNexus(7, 6);
 
         // Setup Monster Positions to right of each lane
         // set 1st monster to 0,1
