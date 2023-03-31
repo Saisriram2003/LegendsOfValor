@@ -31,6 +31,14 @@ public class Board {
     public Cell[][] getBoard() {
         return this.board;
     }
+    // getNumRows
+    public int getNumRows(){
+        return this.numRows;
+    }
+    // getNumCols
+    public int getNumCols(){
+        return this.numCols;
+    }
 
 
     // printBoard prints the Board in a neat manner

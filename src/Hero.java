@@ -17,6 +17,7 @@ public abstract class Hero extends Character implements LevelUp, Dodgeable,hasNe
 
     private int NexusRow = 0;
     private int NexusCol = 0;
+    private int NexusLane = 0;
 
 
     public Hero(String name, double MP,double Strength,double Agility,double Dexterity,double Gold,double startingExp) {
@@ -39,6 +40,10 @@ public abstract class Hero extends Character implements LevelUp, Dodgeable,hasNe
 
     public int getMyNexusRow() {
         return this.NexusRow;
+    }
+
+    public int getMyNexusLane() {
+        return this.NexusLane;
     }
 
     public double getOriginalMP() {
@@ -82,9 +87,10 @@ public abstract class Hero extends Character implements LevelUp, Dodgeable,hasNe
     }
 
 
-    public void setMyNexus(int row, int col) {
+    public void setMyNexus(int row, int col, int lane) {
         this.NexusRow = row;
         this.NexusCol = col;
+        this.NexusLane = lane;
     }
 
     public void setExp(double Exp) {
@@ -302,7 +308,25 @@ public abstract class Hero extends Character implements LevelUp, Dodgeable,hasNe
                 System.out.println("There is already a Hero on this cell!");
                 return false;
             }
-            currBoard.getCell(this.getCurrRow(), this.getCurrCol()).removeHasHero();
+
+            // If moving up the board and there is a monster on current cell or next to it, return false
+            if (row < this.getCurrRow()) {
+                if (currBoard.getCell(this.getCurrRow(), this.getCurrCol()).hasMonster()) {
+                    System.out.println("There is a monster on this cell!");
+                    return false;
+                }
+                if (this.getCurrCol() > 0 && currBoard.getCell(this.getCurrRow(), this.getCurrCol() - 1).hasMonster()) {
+                    System.out.println("There is a monster on the cell to the left!");
+                    return false;
+                }
+                if (this.getCurrCol() < currBoard.getNumCols() - 1 && currBoard.getCell(this.getCurrRow(), this.getCurrCol() + 1).hasMonster()) {
+                    System.out.println("There is a monster on the cell to the right!");
+                    return false;
+                }
+            }
+     
+
+            currBoard.getCell(this.getCurrRow(), this.getCurrCol()).removeHero();
             // If the old cell had a boost, remove it
             if(currBoard.isBushCell(this.getCurrRow(),this.getCurrCol())){
                 BushCell bushCell = (BushCell) currBoard.getCell(this.getCurrRow(), this.getCurrCol());
@@ -317,9 +341,10 @@ public abstract class Hero extends Character implements LevelUp, Dodgeable,hasNe
                 koulouCell.deboostHero(this, 1.1);
             }
 
+
             this.setCurrRow(row);
             this.setCurrCol(col);
-            currBoard.getCell(row, col).setHasHero();
+            currBoard.getCell(row, col).setHero(this);
 
             // if the cell is Bush, Cave, or Koulou I want to boost hero stats with Cell's boostHero method
             if(currBoard.isBushCell(row,col)){
@@ -336,6 +361,26 @@ public abstract class Hero extends Character implements LevelUp, Dodgeable,hasNe
             }
         }
         return result;
+    }
+    // teleport method should move current Hero to an adjacent cell to chosen Hero
+    public boolean teleportToHero(Hero hero, Board currBoard) {
+        int heroRow = hero.getCurrRow();
+        int heroCol = hero.getCurrCol();
+    
+        // Check all adjacent cells to the hero
+        System.out.println("\nAnalyzing the spaces...");
+        for (int row = heroRow; row <= heroRow + 1; row++) {
+            for (int col = heroCol - 1; col <= heroCol + 1; col++) {
+                if (this.moveToCell(row, col, currBoard) == true) {
+                    // Move to the first valid cell found
+                    System.out.println("\u001B[32m" + "You have been teleported!\n" + "\u001B[0m");
+                    this.setCurrLane(hero.getCurrLane());
+                    return true;
+                }
+            }
+        }
+        System.out.println("Could not teleport to Hero. No valid adjacent cells found.");
+        return false;
     }
     // recall method should return Hero to myNexus cell
     public void recall(Board currBoard){

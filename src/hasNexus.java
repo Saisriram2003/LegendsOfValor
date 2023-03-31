@@ -1,7 +1,7 @@
 public interface hasNexus {
 
     // set myNexus
-    public void setMyNexus(int row, int col);
+    public void setMyNexus(int row, int col,int lane);
 
     //get myNexus
     public int getMyNexusRow();

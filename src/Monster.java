@@ -8,6 +8,7 @@ public abstract class Monster extends Character implements Dodgeable,hasNexus {
     private double dodgeAbility;
     private int NexusRow = 0;
     private int NexusCol = 0;
+    private int NexusLane = 0;
 
 
     public Monster(String name, int level, double baseDamage, double Defense, double dodgeAbility) {
@@ -61,9 +62,10 @@ public abstract class Monster extends Character implements Dodgeable,hasNexus {
         this.dodgeAbility = dodgeAbility;
     }
 
-    public void setMyNexus(int row, int col) {
+    public void setMyNexus(int row, int col,int lane) {
         this.NexusRow = row;
         this.NexusCol = col;
+        this.NexusLane = lane;
     }
     
     public boolean dodgedAttack(){
@@ -109,6 +111,21 @@ public abstract class Monster extends Character implements Dodgeable,hasNexus {
     public boolean moveToCell(int row, int col, Board currBoard) {
         boolean result = super.moveToCell(row, col, currBoard);
         if (result) {
+            // If moving down the board and there is a hero on current cell or next to it, return false
+            if (row > this.getCurrRow()) {
+                if (currBoard.getCell(this.getCurrRow(), this.getCurrCol()).hasHero()) {
+                    System.out.println("There is a hero on this cell!");
+                    return false;
+                }
+                if (this.getCurrCol() > 0 && currBoard.getCell(this.getCurrRow(), this.getCurrCol() - 1).hasHero()) {
+                    System.out.println("There is a hero on the cell to the left!");
+                    return false;
+                }
+                if (this.getCurrCol() < currBoard.getNumCols() - 1 && currBoard.getCell(this.getCurrRow(), this.getCurrCol() + 1).hasHero()) {
+                    System.out.println("There is a hero on the cell to the right!");
+                    return false;
+                }
+            }
             // if cell already has a monster return false
             if (currBoard.getCell(row, col).hasMonster()) {
                 System.out.println("There is already a monster on this cell!");

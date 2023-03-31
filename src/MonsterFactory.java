@@ -33,4 +33,15 @@ public class MonsterFactory {
         }
         return battleMonsters;
     }
+    public static Monster createRandomMonster(int level, int lane) {
+        Random random = new Random();
+        LegendGameSetup gameSetup = LegendGameSetup.getInstance();
+        HashMap<Integer, ArrayList<Monster>> MonsterLevelMap = gameSetup.getMonsterLevelMap();
+        ArrayList<Monster> monsters = MonsterLevelMap.get(level);
+        int index = random.nextInt(monsters.size());
+        Monster monster = monsters.get(index);
+        Monster newMonster =  createMonster(monster.getClass().getSimpleName(), monster.getName(), monster.getLevel(), monster.getBaseDamage(), monster.getDefense(), monster.getDodgeAbility());
+        newMonster.setCurrLane(lane);
+        return newMonster;
+    }
 }

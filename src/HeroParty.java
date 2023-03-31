@@ -27,6 +27,16 @@ public class HeroParty {
     public ArrayList<Hero> getHeroList(){
         return this.heroList;
     }
+    // return a list of Heros in other lanes
+    public ArrayList<Hero> getOtherLaneHeroes(Hero hero){
+        ArrayList<Hero> otherHeroes = new ArrayList<Hero>();
+        for(Hero h: heroList){
+            if(h.getCurrLane() != hero.getCurrLane()){
+                otherHeroes.add(h);
+            }
+        }
+        return otherHeroes;
+    }
     // Method to display information about the party
     public void displayPartyInfo() {
         System.out.println("Party Information:");

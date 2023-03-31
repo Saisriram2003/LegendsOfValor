@@ -7,6 +7,7 @@ public abstract class Cell {
     // hasMonster is true if a monster is on the cell
     private boolean hasMonster;
     private Monster monster;
+    private Hero hero;
 
     public Cell(String type){
         this.type = type;
@@ -22,11 +23,15 @@ public abstract class Cell {
     public boolean hasHero() {
         return this.hasHero;
     }
-    public void setHasHero(){
+    public void setHero(Hero hero){
+        this.hero = hero;
         this.hasHero = true;
     }
-    public void removeHasHero(){
+    public Hero removeHero(){
+        Hero removedHero = this.hero;
+        this.hero = null;
         this.hasHero = false;
+        return removedHero;
     }
     public boolean hasMonster() {
         return this.hasMonster;
@@ -35,9 +40,11 @@ public abstract class Cell {
     public Monster getMonster() {
         return monster;
     }
-    public void removeMonster(){
+    public Monster removeMonster(){
+        Monster removedMonster = this.monster;
         this.monster = null;
         this.hasMonster = false;
+        return removedMonster;
     }
     public void setMonster(Monster monster) {
         this.hasMonster = true;

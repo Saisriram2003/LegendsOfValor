@@ -33,6 +33,7 @@ public class LegendsMenu extends Menu{
                     System.out.println("M: Enter market");
                     System.out.println("T: Display Map");
                     System.out.println("R: Recall To Nexus");
+                    System.out.println("O: Teleport");
                     System.out.println("Q: Quit game");
                     System.out.println("P: Check Inventory");
                     char input = InputValidation.getValidChar(hero.getName() + " select an option from above: ");
@@ -48,6 +49,15 @@ public class LegendsMenu extends Menu{
                             Battle battle = new Battle(hero, currCell.getMonster());
                             if (!battle.startBattle()) {
                                 System.out.println("You lost the battle! You will be respawned at your Nexus.");
+                                hero.moveToCell(hero.getMyNexusRow(), hero.getMyNexusCol(), board);
+                            }
+                            else{
+
+                                // Have to check if there is a Monster at the Nexus in that lane! Or just make it random additions every few rounds
+//                                Monster newMonster = MonsterFactory.createRandomMonster(myTeam.getMaxLevel(), currCell.getMonster().getCurrLane());
+                                Monster oldMonster = currCell.removeMonster();
+//                                newMonster.moveToCell(oldMonster.getMyNexusRow(), oldMonster.getMyNexusCol(),board);
+
                             }
                         }
                     }
@@ -106,6 +116,7 @@ public class LegendsMenu extends Menu{
                 break;
             case 'r':
                 hero.moveToCell(hero.getMyNexusRow(),hero.getMyNexusCol(),board);
+                hero.setCurrLane(hero.getMyNexusLane());
                 break;
             case 'p':
                 // Ask user to choose a hero to see their inventory
@@ -114,6 +125,32 @@ public class LegendsMenu extends Menu{
             case 't':
                 board.printBoard();
                 return false;
+            case 'o':
+                // Get the heros in other lanes
+                ArrayList<Hero> herosInOtherLanes = myTeam.getOtherLaneHeroes(hero);
+                // If there are no heros in other lanes
+                if(herosInOtherLanes.size() == 0){
+                    System.out.println("There are no heros in other lanes to teleport to!");
+                    return false;
+                }
+                // If there are heros in other lanes
+                else{
+                    // Print out the heros in other lanes
+                    System.out.println("Heros in other lanes:");
+                    for(int i = 0; i < herosInOtherLanes.size(); i++){
+                        System.out.println(i + ": " + herosInOtherLanes.get(i).getName());
+                    }
+                    // Get the user input for which hero to teleport to
+                    int idx = InputValidation.getValidInt("Enter the index of the hero you want to teleport to: ", 0, herosInOtherLanes.size() - 1);
+                    Hero heroToTeleportTo = herosInOtherLanes.get(idx);
+                    // Teleport the hero to the other hero
+                    if(hero.teleportToHero(heroToTeleportTo, board)){
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
             default:
                 System.out.println("Invalid input. Please enter a character in the options given!");
                 break;

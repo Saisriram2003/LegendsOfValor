@@ -85,29 +85,42 @@ public class Legends extends Game{
         ArrayList<Hero> heroList = myTeam.getHeroList();
         // set 1st hero to 7,0 and his NexusCell to 7,0
         heroList.get(0).moveToCell(7,0,board);
-        heroList.get(0).setMyNexus(7, 0);
+        heroList.get(0).setMyNexus(7, 0,0);
+        // set current lane to 1
+        heroList.get(0).setCurrLane(1);
 
 
         // set 2nd hero to 7,3
         heroList.get(1).moveToCell(7,3,board);
-        heroList.get(1).setMyNexus(7, 3);
+        heroList.get(1).setMyNexus(7, 3,1);
+        // set current lane to 2
+        heroList.get(1).setCurrLane(2);
 
         //set 3rd hero to 7,6
         heroList.get(2).moveToCell(7,6,board);
-        heroList.get(2).setMyNexus(7, 6);
+        heroList.get(2).setMyNexus(7, 6,2);
+        // set current lane to 3
+        heroList.get(2).setCurrLane(3);
 
         // Setup Monster Positions to right of each lane
         // set 1st monster to 0,1
         monsterTeam.get(0).moveToCell(0,1,board);
-        monsterTeam.get(0).setMyNexus(0, 1);
+        monsterTeam.get(0).setMyNexus(0, 1,0);
+        //set current lane to 1
+        monsterTeam.get(0).setCurrLane(1);
         
         // set 2nd monster to 0,4
         monsterTeam.get(1).moveToCell(0,4,board);
-        monsterTeam.get(1).setMyNexus(0, 4);
+        monsterTeam.get(1).setMyNexus(0, 4,1);
+        // set current lane to 2
+        monsterTeam.get(1).setCurrLane(2);
+
 
         // set 3rd monster to 0,7
         monsterTeam.get(2).moveToCell(0,7,board);
-        monsterTeam.get(2).setMyNexus(0, 7);
+        monsterTeam.get(2).setMyNexus(0, 7,2);
+        // set current lane to 3
+        monsterTeam.get(2).setCurrLane(3);
 
     }
     // Getters

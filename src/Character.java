@@ -8,6 +8,8 @@ public abstract class Character {
     private int currCol;
     private int currRow;
 
+    private int currLane;
+
     private ArrayList<String> favoredAttributes;
     public Character(String name,int level){
         this.name = name;
@@ -17,7 +19,15 @@ public abstract class Character {
         this.currRow = 0;
         this.currCol = 0;
     }
-
+    
+    // get current lane 
+    public int getCurrLane(){
+        return this.currLane;
+    }
+    // set current lane
+    public void setCurrLane(int currLane){
+        this.currLane = currLane;
+    }
 
     // return true if HP > 0, else false
      public boolean isAlive() {
