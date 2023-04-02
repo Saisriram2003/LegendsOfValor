@@ -35,9 +35,13 @@ public class Legends extends Game{
 
         System.out.println("\nGood luck on your adventure!");
         System.out.println(myTeam);
-
+        int rounds = 0;
 
         while (true) {
+            if((++rounds % 5 ) == 0){
+                // if lane 1 nexus has no monster spawn new one 
+            }
+
             // do hero turn for each hero
             for (Hero hero : myTeam.getHeroList()) {
                 if (hero.isAlive()) {
@@ -54,7 +58,6 @@ public class Legends extends Game{
             }
             
             }
-        
 
     }
     // check if game over by checking if any Hero reached monster Nexus or if any Monster reached Hero Nexus
@@ -105,9 +108,12 @@ public class Legends extends Game{
         // Setup Monster Positions to right of each lane
         // set 1st monster to 0,1
         monsterTeam.get(0).moveToCell(0,1,board);
+
         monsterTeam.get(0).setMyNexus(0, 1,0);
         //set current lane to 1
         monsterTeam.get(0).setCurrLane(1);
+
+
         
         // set 2nd monster to 0,4
         monsterTeam.get(1).moveToCell(0,4,board);
@@ -119,9 +125,17 @@ public class Legends extends Game{
         // set 3rd monster to 0,7
         monsterTeam.get(2).moveToCell(0,7,board);
         monsterTeam.get(2).setMyNexus(0, 7,2);
+
         // set current lane to 3
         monsterTeam.get(2).setCurrLane(3);
 
+
+    }
+
+    // spawn monsters in a lane
+    public void spawnMonsters(int lane){
+
+ 
     }
     // Getters
     public Board getGameBoard(){

@@ -366,17 +366,18 @@ public abstract class Hero extends Character implements LevelUp, Dodgeable,hasNe
     public boolean teleportToHero(Hero hero, Board currBoard) {
         int heroRow = hero.getCurrRow();
         int heroCol = hero.getCurrCol();
-    
+        
         // Check all adjacent cells to the hero
         System.out.println("\nAnalyzing the spaces...");
-        for (int row = heroRow; row <= heroRow + 1; row++) {
-            for (int col = heroCol - 1; col <= heroCol + 1; col++) {
-                if (this.moveToCell(row, col, currBoard) == true) {
-                    // Move to the first valid cell found
-                    System.out.println("\u001B[32m" + "You have been teleported!\n" + "\u001B[0m");
-                    this.setCurrLane(hero.getCurrLane());
-                    return true;
-                }
+        int[][] adjacentCells = {{heroRow+1, heroCol}, {heroRow, heroCol-1}, {heroRow, heroCol+1}};
+        for (int[] cell : adjacentCells) {
+            int row = cell[0];
+            int col = cell[1];
+            if (this.moveToCell(row, col, currBoard)) {
+                // Move to the first valid cell found if it's not diagonal
+                System.out.println("\u001B[32m" + "You have been teleported!\n" + "\u001B[0m");
+                this.setCurrLane(hero.getCurrLane());
+                return true;
             }
         }
         System.out.println("Could not teleport to Hero. No valid adjacent cells found.");

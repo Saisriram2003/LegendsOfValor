@@ -8,11 +8,23 @@ public abstract class Cell {
     private boolean hasMonster;
     private Monster monster;
     private Hero hero;
+    private int row;
+    private int col;
 
-    public Cell(String type){
+    public Cell(String type,int row,int col){
         this.type = type;
         this.hasHero = false;
         this.hasMonster = false;
+        this.row = row;
+        this.col = col;
+    }
+    // get row
+    public int getRow() {
+        return row;
+    }
+    // get col
+    public int getCol() {
+        return col;
     }
     public String getType() {
         return type;

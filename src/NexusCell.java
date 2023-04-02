@@ -6,8 +6,8 @@ import java.util.Iterator;
 public class NexusCell extends Cell{
     private Market marketCreator = new Market();
     private ArrayList<Item> itemsToSell;
-    public NexusCell() {
-        super("N");
+    public NexusCell(int row,int col) {
+        super("N",row,col);
         this.itemsToSell = marketCreator.createMarketInstance(2);
     }
     public void showItemsToSell(){

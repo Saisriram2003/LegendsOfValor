@@ -49,15 +49,8 @@ public class LegendsMenu extends Menu{
                             Battle battle = new Battle(hero, currCell.getMonster());
                             if (!battle.startBattle()) {
                                 System.out.println("You lost the battle! You will be respawned at your Nexus.");
+                                hero.setHP(hero.getMaxHP());
                                 hero.moveToCell(hero.getMyNexusRow(), hero.getMyNexusCol(), board);
-                            }
-                            else{
-
-                                // Have to check if there is a Monster at the Nexus in that lane! Or just make it random additions every few rounds
-//                                Monster newMonster = MonsterFactory.createRandomMonster(myTeam.getMaxLevel(), currCell.getMonster().getCurrLane());
-                                Monster oldMonster = currCell.removeMonster();
-//                                newMonster.moveToCell(oldMonster.getMyNexusRow(), oldMonster.getMyNexusCol(),board);
-
                             }
                         }
                     }
@@ -109,11 +102,10 @@ public class LegendsMenu extends Menu{
                 if (board.isNexusCell(partyRow, partyCol)) {
                     NexusCell marketCell = (NexusCell) board.getCell(partyRow, partyCol);
                     marketCell.enterMarket(hero);
-                    return false;
                 } else {
                     System.out.println("You are not on a Market please move to one and try again.");
                 }
-                break;
+                return false;
             case 'r':
                 hero.moveToCell(hero.getMyNexusRow(),hero.getMyNexusCol(),board);
                 hero.setCurrLane(hero.getMyNexusLane());
@@ -153,7 +145,7 @@ public class LegendsMenu extends Menu{
                 }
             default:
                 System.out.println("Invalid input. Please enter a character in the options given!");
-                break;
+                return false;
         }
         return true;
     }

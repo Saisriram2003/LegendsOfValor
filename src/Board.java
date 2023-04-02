@@ -187,13 +187,13 @@ public class Board {
     public void resetBoard(){
         // first and last row are NexusCell
         for (int i = 0; i < this.numCols; ++i) {
-            board[0][i] = new MonsterNexusCell();
-            board[this.numRows - 1][i] = new HeroNexusCell();
+            board[0][i] = new MonsterNexusCell(0,i);
+            board[this.numRows - 1][i] = new HeroNexusCell(this.numRows - 1,i);
         }
         // 3rd and 6th column are InaccessibleCell
         for (int i = 0; i < this.numRows; ++i) {
-            board[i][2] = new InaccessibleCell();
-            board[i][5] = new InaccessibleCell();
+            board[i][2] = new InaccessibleCell(i,2);
+            board[i][5] = new InaccessibleCell(i,5);
         }
         // rest of the board is composed of 20% of each special space type (Bush, Cave, and Koulou) and 40% Plain spaces
         for (int i = 1; i < this.numRows - 1; ++i) {
@@ -203,13 +203,13 @@ public class Board {
                 }
                 double rand = random.nextDouble();
                 if (rand < 0.2) {
-                    board[i][j] = new BushCell();
+                    board[i][j] = new BushCell(i,j);
                 } else if (rand < 0.4) {
-                    board[i][j] = new CaveCell();
+                    board[i][j] = new CaveCell(i,j);
                 } else if (rand < 0.6) {
-                    board[i][j] = new KoulouCell();
+                    board[i][j] = new KoulouCell(i,j);
                 } else {
-                    board[i][j] = new PlainCell();
+                    board[i][j] = new PlainCell(i,j);
                 }
             }
         }
