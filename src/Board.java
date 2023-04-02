@@ -182,6 +182,31 @@ public class Board {
         return board[row][col];
     }
 
+    public Monster findMonsterInRange(Cell cell)
+    {
+        //8 hardcoded
+
+        for (int i = cell.getRow() - 1; i <= cell.getRow() + 1; i++) 
+        { 
+            for (int j = cell.getCol() - 1; j <= cell.getCol() + 1; j++) 
+            { 
+                if (i >= 0 && i < numRows && j >= 0 && j < numCols && (i != cell.getRow() || j != cell.getCol())) 
+                { 
+                    Cell currCell = board[i][j]; // Do something with the value at position (i, j) 
+                    if(currCell.hasMonster() == true)
+                    {
+                        return currCell.getMonster();
+                    }
+                } 
+            } 
+        }
+        
+        return null;
+    }
+
+
+
+
 
     // resetBoard resets the board to a new random state
     public void resetBoard(){
