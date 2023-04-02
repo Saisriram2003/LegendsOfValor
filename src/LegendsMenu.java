@@ -39,23 +39,8 @@ public class LegendsMenu extends Menu{
                     char input = InputValidation.getValidChar(hero.getName() + " select an option from above: ");
                     turnEnd = processMenuInput(input,hero);
                 }while(!turnEnd);
-                // check if the current cell is a common cell
-                if (board.isCommonCell(hero.getCurrRow(), hero.getCurrCol())) {
-                    // if it is, then check if a battle occurs
-                    CommonCell currCell = (CommonCell) board.getCell(hero.getCurrRow(), hero.getCurrCol());
-                    if (currCell.doesBattleOccur()) {
-                        if (currCell.hasMonster()) {
-                            System.out.println("Oh no! There are monsters here! Time to fight.");
-                            Battle battle = new Battle(hero, currCell.getMonster());
-                            if (!battle.startBattle()) {
-                                System.out.println("You lost the battle! You will be respawned at your Nexus.");
-                                hero.setHP(hero.getMaxHP());
-                                hero.moveToCell(hero.getMyNexusRow(), hero.getMyNexusCol(), board);
-                            }
-                        }
-                    }
-
-                }
+                
+                
             }
 
     }
@@ -91,6 +76,20 @@ public class LegendsMenu extends Menu{
                 if(!hero.moveToCell(partyRow, partyCol + 1,board)){
                     return false;
                 } // move right
+                break;
+            case 'b':
+                Cell cell = board.getCell(hero.getCurrRow(), hero.getCurrCol());
+                Monster monster = board.findMonsterInRange(cell);
+                    if (monster != null) {
+                        // if it is, then check if a battle occurs
+                                System.out.println("Time to fight.");
+                                Battle battle = new Battle(hero, monster);
+                                if (!battle.startBattle()) {
+                                    System.out.println("You lost the battle! You will be respawned at your Nexus.");
+                                    hero.setHP(hero.getMaxHP());
+                                    hero.moveToCell(hero.getMyNexusRow(), hero.getMyNexusCol(), board);
+                                }
+                            }                
                 break;
             case 'q':
                 legend.quit(); // quit game
