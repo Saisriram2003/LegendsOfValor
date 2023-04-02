@@ -3,6 +3,8 @@ public class MonsterNexusCell extends NexusCell{
         super(row, col);
     }
     public void spawnMonster(int level){
+        Monster newMonster = MonsterFactory.createRandomMonster(level);
+        this.setMonster(newMonster);
     }
 
 
