@@ -183,7 +183,7 @@ public class Board {
     }
 
 
-    public Character findCharacterInRange(Cell cell, boolean searchHero){
+    public Cell findCharacterInRange(Cell cell, boolean searchHero){
 
         //8 hardcoded
 
@@ -196,11 +196,11 @@ public class Board {
                     Cell currCell = board[i][j]; // Do something with the value at position (i, j) 
                     if(currCell.hasMonster() == true && !searchHero)
                     {
-                        return (Monster)currCell.getCharacter('m');
+                        return currCell;
                     }
                     else if(currCell.hasHero() == true && searchHero)
                     {
-                        return (Hero)currCell.getCharacter('h');
+                        return currCell;
 
                     }
                 } 

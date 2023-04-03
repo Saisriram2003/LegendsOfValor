@@ -18,7 +18,7 @@ public class Legends extends Game{
         board = new Board(8);
     }
     // Start the game
-    public void start(){
+    public void start() {
         System.out.println("\nHello! Welcome to the world of Legends of Valor!");
         System.out.println("\nThis is a battle between Heroes and Monsters in a contest of strategy and skill. \nTake advantage of the" +
                 " terrain, coordinate actions between heroes, and use items to outwit and outfight the invading" +
@@ -28,9 +28,9 @@ public class Legends extends Game{
 
         System.out.println("\nTo start off please choose the 3 Heroes that will aid you in this fight!");
         // Setting Hero Party of size 3
-        myTeam = new HeroParty(3,this);
+        myTeam = new HeroParty(3, this);
         // Setting Monster Party of size 3 all level 1 for now
-        monsterTeam = MonsterFactory.createBattleMonsters(1,3);
+        monsterTeam = MonsterFactory.createBattleMonsters(1, 3);
 
         setupPositions();
 
@@ -43,7 +43,7 @@ public class Legends extends Game{
 
         while (true) {
             // Spawn Monsters
-            if((rounds++ % 6 ) == 0){
+            if ((rounds++ % 6) == 0) {
                 lane1.spawnMonster(myTeam.getMaxLevel());
                 lane2.spawnMonster(myTeam.getMaxLevel());
                 lane3.spawnMonster(myTeam.getMaxLevel());
@@ -57,18 +57,17 @@ public class Legends extends Game{
                 isGameOver();
             }
             // for every monster move down 1 row
-            System.out.println(monsterTeam);
-            for(Monster monster: monsterTeam){
+            ArrayList<Monster> tempMonsterTeam = new ArrayList<Monster>(monsterTeam);
+            for (Monster monster : tempMonsterTeam) {
                 System.out.println("Monster " + monster.getName() + " Turn");
-                if(monster.isAlive() ){
-
-                    //if theres no heroes in the attack range then move
-                    Hero hero = (Hero)board.findCharacterInRange(board.getCell(monster.getCurrRow(), monster.getCurrCol()), true);
-                    if(hero == null)
-                    {
+                Cell heroCell = null;
+                if (monster.isAlive()) {
+                    //if there's no heroes in the attack range then move
+                    heroCell = board.findCharacterInRange(board.getCell(monster.getCurrRow(), monster.getCurrCol()), true);
+                    if (heroCell == null)
                         monster.moveToCell(monster.getCurrRow() + 1, monster.getCurrCol(), board);
-                    }
-                    else{
+                    else {
+                        Hero hero = heroCell.getHero();
                         //attack
                         System.out.println("Time to fight.");
                         Battle battle = new Battle(hero, monster);
@@ -77,13 +76,17 @@ public class Legends extends Game{
                             hero.setHP(hero.getMaxHP());
                             hero.moveToCell(hero.getMyNexusRow(), hero.getMyNexusCol(), board);
                         }
+                        else{
+                            Cell monsterCell = board.getCell(monster.getCurrRow(),monster.getCurrCol());
+                            Legends.monsterTeam.remove(monsterCell.getMonster());
+                            monsterCell.removeMonster();
+                        }
                     }
-
                 }
-                isGameOver();
+
             }
-            
-            }
+            isGameOver();
+        }
 
     }
 

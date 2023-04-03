@@ -6,8 +6,8 @@ public abstract class Cell {
     private boolean hasHero;
     // hasMonster is true if a monster is on the cell
     private boolean hasMonster;
-    private Monster monster;
-    private Hero hero;
+    private Monster monster = null;
+    private Hero hero = null;
     private int row;
     private int col;
     private Character character;
@@ -56,7 +56,7 @@ public abstract class Cell {
     }
 
     public Hero getHero(){
-        return hero;
+            return hero;
     }
 
     public Character getCharacter(char type){

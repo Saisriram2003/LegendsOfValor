@@ -80,10 +80,8 @@ public class LegendsMenu extends Menu{
                 break;
             case 'b':
                 Cell cell = board.getCell(hero.getCurrRow(), hero.getCurrCol());
-
-                Monster monster = (Monster) board.findCharacterInRange(cell, false);
-                    if (monster != null) {
-
+                Cell monsterCell =  board.findCharacterInRange(cell, false);
+                    if (monsterCell != null) {
                         // if it is, then check if a battle occurs
                                 System.out.println("Time to fight.");
                                 Battle battle = new Battle(hero, monsterCell.getMonster());
@@ -94,6 +92,7 @@ public class LegendsMenu extends Menu{
                                 }
                                 else{
                                     Legends.monsterTeam.remove(monsterCell.getMonster());
+                                    System.out.println("REMOVED MONSTER");
                                     monsterCell.removeMonster();
                                 }
                             }
