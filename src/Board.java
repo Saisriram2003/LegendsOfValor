@@ -182,20 +182,26 @@ public class Board {
         return board[row][col];
     }
 
-    public Cell findMonsterInRange(Cell cell)
-    {
+
+    public Character findCharacterInRange(Cell cell, boolean searchHero){
+
         //8 hardcoded
 
         for (int i = cell.getRow() - 1; i <= cell.getRow() + 1; i++) 
         { 
             for (int j = cell.getCol() - 1; j <= cell.getCol() + 1; j++) 
             { 
-                if (i >= 0 && i < numRows && j >= 0 && j < numCols && (i != cell.getRow() || j != cell.getCol())) 
+                if (i >= 0 && i < numRows && j >= 0 && j < numCols) 
                 { 
                     Cell currCell = board[i][j]; // Do something with the value at position (i, j) 
-                    if(currCell.hasMonster() == true)
+                    if(currCell.hasMonster() == true && !searchHero)
                     {
-                        return currCell;
+                        return (Monster)currCell.getCharacter('m');
+                    }
+                    else if(currCell.hasHero() == true && searchHero)
+                    {
+                        return (Hero)currCell.getCharacter('h');
+
                     }
                 } 
             } 
@@ -203,8 +209,6 @@ public class Board {
         
         return null;
     }
-
-
 
 
 

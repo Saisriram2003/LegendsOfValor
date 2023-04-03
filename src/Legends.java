@@ -59,8 +59,26 @@ public class Legends extends Game{
             // for every monster move down 1 row
             System.out.println(monsterTeam);
             for(Monster monster: monsterTeam){
-                if(monster.isAlive()){
-                    monster.moveToCell(monster.getCurrRow() + 1, monster.getCurrCol(), board);
+                System.out.println("Monster " + monster.getName() + " Turn");
+                if(monster.isAlive() ){
+
+                    //if theres no heroes in the attack range then move
+                    Hero hero = (Hero)board.findCharacterInRange(board.getCell(monster.getCurrRow(), monster.getCurrCol()), true);
+                    if(hero == null)
+                    {
+                        monster.moveToCell(monster.getCurrRow() + 1, monster.getCurrCol(), board);
+                    }
+                    else{
+                        //attack
+                        System.out.println("Time to fight.");
+                        Battle battle = new Battle(hero, monster);
+                        if (!battle.startBattle()) {
+                            System.out.println("You lost the battle! You will be respawned at your Nexus.");
+                            hero.setHP(hero.getMaxHP());
+                            hero.moveToCell(hero.getMyNexusRow(), hero.getMyNexusCol(), board);
+                        }
+                    }
+
                 }
                 isGameOver();
             }
