@@ -4,11 +4,14 @@ import java.util.ArrayList;
 
 public class Legends extends Game{
     HeroParty myTeam;
-    private ArrayList<Monster> monsterTeam;
+    public static ArrayList<Monster> monsterTeam;
 
 
     private Board board;
     private LegendsMenu menu;
+    private MonsterNexusCell lane1;
+    private MonsterNexusCell lane2;
+    private MonsterNexusCell lane3;
 
     public Legends() {
         // Board is size 8 x 8
@@ -30,16 +33,20 @@ public class Legends extends Game{
         monsterTeam = MonsterFactory.createBattleMonsters(1,3);
 
         setupPositions();
+
         menu = new LegendsMenu(this);
 
 
         System.out.println("\nGood luck on your adventure!");
         System.out.println(myTeam);
-        int rounds = 0;
+        int rounds = 1;
 
         while (true) {
-            if((++rounds % 5 ) == 0){
-                // if lane 1 nexus has no monster spawn new one 
+            // Spawn Monsters
+            if((rounds++ % 6 ) == 0){
+                lane1.spawnMonster(myTeam.getMaxLevel());
+                lane2.spawnMonster(myTeam.getMaxLevel());
+                lane3.spawnMonster(myTeam.getMaxLevel());
             }
 
             // do hero turn for each hero
@@ -50,6 +57,7 @@ public class Legends extends Game{
                 isGameOver();
             }
             // for every monster move down 1 row
+            System.out.println(monsterTeam);
             for(Monster monster: monsterTeam){
                 System.out.println("Monster " + monster.getName() + " Turn");
                 if(monster.isAlive() ){
@@ -78,6 +86,8 @@ public class Legends extends Game{
             }
 
     }
+
+
     // check if game over by checking if any Hero reached monster Nexus or if any Monster reached Hero Nexus
     public boolean isGameOver(){
         // check if any hero reached any of the monster Nexus's which is the first row 
@@ -131,6 +141,8 @@ public class Legends extends Game{
         //set current lane to 1
         monsterTeam.get(0).setCurrLane(1);
 
+        lane1 = (MonsterNexusCell) board.getCell(0,1);
+
 
         
         // set 2nd monster to 0,4
@@ -138,6 +150,7 @@ public class Legends extends Game{
         monsterTeam.get(1).setMyNexus(0, 4,1);
         // set current lane to 2
         monsterTeam.get(1).setCurrLane(2);
+        lane2 = (MonsterNexusCell) board.getCell(0,4);
 
 
         // set 3rd monster to 0,7
@@ -146,15 +159,11 @@ public class Legends extends Game{
 
         // set current lane to 3
         monsterTeam.get(2).setCurrLane(3);
+        lane3 = (MonsterNexusCell) board.getCell(0,7);
 
 
     }
 
-    // spawn monsters in a lane
-    public void spawnMonsters(int lane){
-
- 
-    }
     // Getters
     public Board getGameBoard(){
         return board;

@@ -29,6 +29,7 @@ public class LegendsMenu extends Menu{
                     System.out.println("A: Move left");
                     System.out.println("S: Move down");
                     System.out.println("D: Move right");
+                    System.out.println("B: Attack Monster");
                     System.out.println("I: Display party info");
                     System.out.println("M: Enter market");
                     System.out.println("T: Display Map");
@@ -79,17 +80,27 @@ public class LegendsMenu extends Menu{
                 break;
             case 'b':
                 Cell cell = board.getCell(hero.getCurrRow(), hero.getCurrCol());
+
                 Monster monster = (Monster) board.findCharacterInRange(cell, false);
                     if (monster != null) {
+
                         // if it is, then check if a battle occurs
                                 System.out.println("Time to fight.");
-                                Battle battle = new Battle(hero, monster);
+                                Battle battle = new Battle(hero, monsterCell.getMonster());
                                 if (!battle.startBattle()) {
                                     System.out.println("You lost the battle! You will be respawned at your Nexus.");
                                     hero.setHP(hero.getMaxHP());
                                     hero.moveToCell(hero.getMyNexusRow(), hero.getMyNexusCol(), board);
                                 }
-                            }                
+                                else{
+                                    Legends.monsterTeam.remove(monsterCell.getMonster());
+                                    monsterCell.removeMonster();
+                                }
+                            }
+                    else{
+                        System.out.println("There are no Monsters to Attack");
+                        return false;
+                    }
                 break;
             case 'q':
                 legend.quit(); // quit game
