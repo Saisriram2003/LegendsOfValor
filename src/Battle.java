@@ -61,10 +61,6 @@ public class Battle {
             hero.setMP(hero.getOriginalMP());
             System.out.println("\u001B[32m" + "Hero Stats" + "\u001B[0m");
             hero.showStats();
-        
-            hero.setHP(hero.getMaxHP()/2);
-            hero.setMP(hero.getOriginalMP()/1.5);
-
     }
     
     // Function that sets Monsters back to full health after battle

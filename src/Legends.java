@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Legends extends Game{
     HeroParty myTeam;
-    private ArrayList<Monster> monsterTeam;
+    public static ArrayList<Monster> monsterTeam;
 
 
     private Board board;
@@ -33,16 +33,17 @@ public class Legends extends Game{
         monsterTeam = MonsterFactory.createBattleMonsters(1,3);
 
         setupPositions();
+
         menu = new LegendsMenu(this);
 
 
         System.out.println("\nGood luck on your adventure!");
         System.out.println(myTeam);
-        int rounds = 0;
+        int rounds = 1;
 
         while (true) {
             // Spawn Monsters
-            if((rounds++ % 5 ) == 0){
+            if((rounds++ % 6 ) == 0){
                 lane1.spawnMonster(myTeam.getMaxLevel());
                 lane2.spawnMonster(myTeam.getMaxLevel());
                 lane3.spawnMonster(myTeam.getMaxLevel());
@@ -56,6 +57,7 @@ public class Legends extends Game{
                 isGameOver();
             }
             // for every monster move down 1 row
+            System.out.println(monsterTeam);
             for(Monster monster: monsterTeam){
                 if(monster.isAlive()){
                     monster.moveToCell(monster.getCurrRow() + 1, monster.getCurrCol(), board);

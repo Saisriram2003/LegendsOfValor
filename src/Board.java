@@ -182,7 +182,7 @@ public class Board {
         return board[row][col];
     }
 
-    public Monster findMonsterInRange(Cell cell)
+    public Cell findMonsterInRange(Cell cell)
     {
         //8 hardcoded
 
@@ -195,7 +195,7 @@ public class Board {
                     Cell currCell = board[i][j]; // Do something with the value at position (i, j) 
                     if(currCell.hasMonster() == true)
                     {
-                        return currCell.getMonster();
+                        return currCell;
                     }
                 } 
             } 
