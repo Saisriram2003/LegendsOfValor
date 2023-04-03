@@ -10,6 +10,7 @@ public abstract class Cell {
     private Hero hero;
     private int row;
     private int col;
+    private Character character;
 
     public Cell(String type,int row,int col){
         this.type = type;
@@ -18,6 +19,7 @@ public abstract class Cell {
         this.row = row;
         this.col = col;
     }
+
     // get row
     public int getRow() {
         return row;
@@ -51,6 +53,22 @@ public abstract class Cell {
 
     public Monster getMonster() {
         return monster;
+    }
+
+    public Hero getHero(){
+        return hero;
+    }
+
+    public Character getCharacter(char type){
+        switch(type){
+            case 'm':
+                return this.monster;
+            case 'h':
+                return this.hero;
+            default:
+                System.out.println("Invalid type");
+                return null;
+        }
     }
     public Monster removeMonster(){
         Monster removedMonster = this.monster;

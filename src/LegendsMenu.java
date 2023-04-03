@@ -79,7 +79,7 @@ public class LegendsMenu extends Menu{
                 break;
             case 'b':
                 Cell cell = board.getCell(hero.getCurrRow(), hero.getCurrCol());
-                Monster monster = board.findMonsterInRange(cell);
+                Monster monster = (Monster) board.findCharacterInRange(cell, false);
                     if (monster != null) {
                         // if it is, then check if a battle occurs
                                 System.out.println("Time to fight.");
