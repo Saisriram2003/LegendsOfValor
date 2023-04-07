@@ -1,6 +1,7 @@
 /*
 This is the parent Board class that is used to create Boards for the games
  */
+import java.util.Arrays;
 import java.util.Random;
 
 public class Board {
@@ -214,20 +215,33 @@ public class Board {
 
     // resetBoard resets the board to a new random state
     public void resetBoard(){
+        int laneWidth = 2;
+        int numLanes = 3;
+        // We get how many Inaccessible Columns are there
+        int numInaccessible = numCols/numLanes;
+        // Store the indices of the Inaccessible columns
+        int[] colIndices = new int[numInaccessible];
         // first and last row are NexusCell
         for (int i = 0; i < this.numCols; ++i) {
             board[0][i] = new MonsterNexusCell(0,i);
             board[this.numRows - 1][i] = new HeroNexusCell(this.numRows - 1,i);
         }
+        // Use formula 2 + 3*i to get the column indices
+        for(int i = 0; i < numInaccessible; ++i){
+            colIndices[i] = laneWidth + (laneWidth + 1)*i;
+        }
+
         // 3rd and 6th column are InaccessibleCell
         for (int i = 0; i < this.numRows; ++i) {
-            board[i][2] = new InaccessibleCell(i,2);
-            board[i][5] = new InaccessibleCell(i,5);
+            // loop through colIndices to get which columns we need to be Inaccessible
+            for (int j = 0; j < colIndices.length; ++j) {
+                board[i][colIndices[j]] = new InaccessibleCell(i,colIndices[j]);
+            }
         }
         // rest of the board is composed of 20% of each special space type (Bush, Cave, and Koulou) and 40% Plain spaces
         for (int i = 1; i < this.numRows - 1; ++i) {
             for (int j = 0; j < this.numCols; ++j) {
-                if (j == 2 || j == 5) {
+                if (board[i][j] != null) {
                     continue;
                 }
                 double rand = random.nextDouble();

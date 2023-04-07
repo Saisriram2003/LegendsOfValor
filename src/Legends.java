@@ -7,7 +7,7 @@ public class Legends extends Game{
     public static ArrayList<Monster> monsterTeam;
 
 
-    private Board board;
+    public static Board board;
     private LegendsMenu menu;
     private MonsterNexusCell lane1;
     private MonsterNexusCell lane2;
@@ -71,16 +71,7 @@ public class Legends extends Game{
                         //attack
                         System.out.println("Time to fight.");
                         Battle battle = new Battle(hero, monster);
-                        if (!battle.startBattle()) {
-                            System.out.println("You lost the battle! You will be respawned at your Nexus.");
-                            hero.setHP(hero.getMaxHP());
-                            hero.moveToCell(hero.getMyNexusRow(), hero.getMyNexusCol(), board);
-                        }
-                        else{
-                            Cell monsterCell = board.getCell(monster.getCurrRow(),monster.getCurrCol());
-                            Legends.monsterTeam.remove(monsterCell.getMonster());
-                            monsterCell.removeMonster();
-                        }
+                        battle.startBattle();
                     }
                 }
 

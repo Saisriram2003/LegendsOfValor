@@ -387,6 +387,10 @@ public abstract class Hero extends Character implements LevelUp, Dodgeable,hasNe
     public void recall(Board currBoard){
         this.moveToCell(this.NexusRow,this.NexusCol, currBoard);
     }
+    public void respawn(Board currBoard){
+        this.setHP(getMaxHP());
+        this.recall(currBoard);
+    }
 
 
 }

@@ -27,7 +27,8 @@ public class Battle {
         while(inBattle){
             showBattleInfo();
             if(!activeHero.isAlive()){
-                System.out.println("\u001B[31m" + "You Lose!" + "\u001B[0m");
+                System.out.println("You lost the battle! You will be respawned at your Nexus.");
+                activeHero.respawn(Legends.board);
                 return false;
             }
             while(!turnEnd){
@@ -40,8 +41,13 @@ public class Battle {
             else{
                 System.out.println("\u001B[32m" + "You Win!" + "\u001B[0m");
                 heroWinBonus();
-                resetMonsterHealth();
-                return true;            }
+                // reset Monster Health for game purposes so next time Monster spawns it has full Health
+                activeMonster.setHP(activeMonster.getMaxHP());
+                Cell monsterCell = Legends.board.getCell(activeMonster.getCurrRow(),activeMonster.getCurrCol());
+                Legends.monsterTeam.remove(monsterCell.getMonster());
+                monsterCell.removeMonster();
+                return true;
+            }
             // All Heroes that are alive need to regain 5% Health and 5% Mana
             activeHero.setHP(activeHero.getHP() * 1.05);
             activeHero.setMP(activeHero.getMP() * 1.05);
@@ -62,12 +68,7 @@ public class Battle {
             System.out.println("\u001B[32m" + "Hero Stats" + "\u001B[0m");
             hero.showStats();
     }
-    
-    // Function that sets Monsters back to full health after battle
-    public void resetMonsterHealth(){
-        activeMonster.setHP(activeMonster.getMaxHP());
-        
-    }
+
 
     public void showBattleInfo(){
         System.out.println("\u001B[32m" + "Active Hero" + "\u001B[0m");

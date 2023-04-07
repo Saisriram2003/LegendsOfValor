@@ -13,7 +13,7 @@ public class LegendsMenu extends Menu{
         this.legend = legend;
         myTeam = legend.getMyTeam();
         monsterTeam = legend.getMonsterTeam();
-        board = legend.getBoard();
+        board = Legends.board;
     }
     
     // Gets user input and processes it
@@ -83,19 +83,10 @@ public class LegendsMenu extends Menu{
                 Cell monsterCell =  board.findCharacterInRange(cell, false);
                     if (monsterCell != null) {
                         // if it is, then check if a battle occurs
-                                System.out.println("Time to fight.");
-                                Battle battle = new Battle(hero, monsterCell.getMonster());
-                                if (!battle.startBattle()) {
-                                    System.out.println("You lost the battle! You will be respawned at your Nexus.");
-                                    hero.setHP(hero.getMaxHP());
-                                    hero.moveToCell(hero.getMyNexusRow(), hero.getMyNexusCol(), board);
-                                }
-                                else{
-                                    Legends.monsterTeam.remove(monsterCell.getMonster());
-                                    System.out.println("REMOVED MONSTER");
-                                    monsterCell.removeMonster();
-                                }
-                            }
+                        System.out.println("Time to fight.");
+                        Battle battle = new Battle(hero, monsterCell.getMonster());
+                        battle.startBattle();
+                    }
                     else{
                         System.out.println("There are no Monsters to Attack");
                         return false;
