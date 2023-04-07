@@ -1,3 +1,4 @@
+// KoulouCell boost Hero's strength by boostAmount
 public class KoulouCell extends CommonCell implements boostingCell{
     public KoulouCell(int row, int col){
         super(row, col);

@@ -1,3 +1,4 @@
+// CaveCell boost hero's agility by boostAmount
 public class CaveCell extends CommonCell implements boostingCell{
     public CaveCell(int row, int col){
         super(row, col);

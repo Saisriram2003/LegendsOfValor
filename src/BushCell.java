@@ -1,3 +1,4 @@
+// BushCell boosts a Hero's dexterity by boostAmount
 public class BushCell extends CommonCell implements boostingCell{
     public BushCell(int row, int col){
         super(row, col);

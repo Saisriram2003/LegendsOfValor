@@ -300,6 +300,7 @@ public abstract class Hero extends Character implements LevelUp, Dodgeable,hasNe
 
     }
     @Override
+    // MovetoCell method for Hero
     public boolean moveToCell(int row, int col, Board currBoard) {
         boolean result = super.moveToCell(row, col, currBoard);
         if (result) {
@@ -387,6 +388,7 @@ public abstract class Hero extends Character implements LevelUp, Dodgeable,hasNe
     public void recall(Board currBoard){
         this.moveToCell(this.NexusRow,this.NexusCol, currBoard);
     }
+    // respawn method should return Hero to myNexus cell and set HP to maxHP
     public void respawn(Board currBoard){
         this.setHP(getMaxHP());
         this.recall(currBoard);

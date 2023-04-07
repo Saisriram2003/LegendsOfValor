@@ -67,6 +67,7 @@ public class Legends extends Game{
                     if (heroCell == null)
                         monster.moveToCell(monster.getCurrRow() + 1, monster.getCurrCol(), board);
                     else {
+                        // Attack Hero
                         Hero hero = heroCell.getHero();
                         //attack
                         System.out.println("Time to fight.");

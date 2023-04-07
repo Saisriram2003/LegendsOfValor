@@ -33,6 +33,7 @@ public class MonsterFactory {
         }
         return battleMonsters;
     }
+    // Create a random Monster based on level
     public static Monster createRandomMonster(int level) {
         Random random = new Random();
         LegendGameSetup gameSetup = LegendGameSetup.getInstance();

@@ -1,3 +1,5 @@
+// Class that handles Battle Functionality
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.lang.Character;
@@ -54,6 +56,8 @@ public class Battle {
         }
         return false;
     }
+
+    // Bonus for winning a battle
     public void heroWinBonus(){
             Hero hero = activeHero;
             hero.setExp(hero.getExp() + activeMonster.expRecieved()); // Add exp based on monster team size * 2
@@ -69,7 +73,7 @@ public class Battle {
             hero.showStats();
     }
 
-
+    // Show Battle Info
     public void showBattleInfo(){
         System.out.println("\u001B[32m" + "Active Hero" + "\u001B[0m");
         activeHero.showStats();
@@ -78,7 +82,7 @@ public class Battle {
         System.out.println();
     }
 
-
+    // Display Battle Options
     public boolean displayBattleOptions() {
         System.out.println("A: Attack");
         System.out.println("S: Cast a spell");
@@ -88,6 +92,8 @@ public class Battle {
         char input = InputValidation.getValidChar("Select an option from above: ");
         return processBattleInput(input);
 }
+
+// Once a User chooses an option, process the input
 public boolean processBattleInput(char input) {
     Inventory activeInventory = activeHero.getInventory();
     switch(Character.toLowerCase(input)) {
@@ -124,6 +130,7 @@ public boolean processBattleInput(char input) {
             return false;
     }
 }
+
 public void endGame(){
     System.out.println("You have fled from your Battle");
 }

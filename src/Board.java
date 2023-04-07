@@ -183,7 +183,7 @@ public class Board {
         return board[row][col];
     }
 
-
+    // Finds a character in range and has a boolean to see if it is a hero or monster
     public Cell findCharacterInRange(Cell cell, boolean searchHero){
 
         //8 hardcoded

@@ -107,6 +107,7 @@ public abstract class Monster extends Character implements Dodgeable,hasNexus {
         }
 
     }
+    // method for Monster to move to a cell
     @Override
     public boolean moveToCell(int row, int col, Board currBoard) {
         boolean result = super.moveToCell(row, col, currBoard);
