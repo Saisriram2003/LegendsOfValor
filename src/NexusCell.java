@@ -15,19 +15,19 @@ public class NexusCell extends Cell{
         for(Item i : itemsToSell){
             // Show weapons
             if(i instanceof Weapon){
-                System.out.println(i.getName() + ": " + "$"+i.getPrice() + " (Damage: " + ((Weapon) i).getDamage() + ")");
+                System.out.println(i.getName() + ": " + "$"+i.getPrice() + " (Damage: " + ((Weapon) i).getDamage() + ")" + " Level: " + i.getLevel());
             }
             // Show armors
             else if(i instanceof Armor){
-                System.out.println(i.getName() + ": " + "$"+i.getPrice() + " (Defense: " + ((Armor) i).getDamageReduction() + ")");
+                System.out.println(i.getName() + ": " + "$"+i.getPrice() + " (Defense: " + ((Armor) i).getDamageReduction() + ")" + " Level: " + i.getLevel());
             }
             // Show potions
             else if(i instanceof Potion){
-                System.out.println(i.getName() + ": " + "$"+i.getPrice() + " (Healing: " + ((Potion) i).getEffectAmount() + ")");
+                System.out.println(i.getName() + ": " + "$"+i.getPrice() + " (Healing: " + ((Potion) i).getEffectAmount() + ")" + " Level: " + i.getLevel());
             }
             // Show Spells
             else if(i instanceof Spell){
-                System.out.println(i.getName() + ": " + "$"+i.getPrice() + " (Damage: " + ((Spell) i).getDamage() + ")");
+                System.out.println(i.getName() + ": " + "$"+i.getPrice() + " (Damage: " + ((Spell) i).getDamage() + ")" + " Level: " + i.getLevel());
             }
         }
     }
@@ -71,11 +71,15 @@ public class NexusCell extends Cell{
 
                     if (Character.toLowerCase(marketBuy) == 'y') {
                         for (int i = 0; i < itemsToSell.size(); i++) {
-                            System.out.println(i + ". " + itemsToSell.get(i).getName() + " - " + ""+itemsToSell.get(i).getPrice());
+                            System.out.println(i + ". " + itemsToSell.get(i).getName() + " - " + ""+itemsToSell.get(i).getPrice() + " Level: " + itemsToSell.get(i).getLevel());
                         }
                         int itemIndex = InputValidation.getValidInt("Enter the index of the item you would like to buy: ", 0, itemsToSell.size() - 1);
                         Item item = itemsToSell.get(itemIndex);
                         System.out.println("You have " + hero.getGold() + " gold.");
+                        if (hero.getLevel() < item.getLevel()) {
+                            System.out.println("You are not high enough level to buy this item.");
+                            break;
+                        }
                         hero.buyItem(item);
                         this.removeItem(item);
                     } else {
